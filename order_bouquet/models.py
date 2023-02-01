@@ -18,11 +18,25 @@ class Bouquet(models.Model):
     number_of_sold = models.IntegerField(blank=True, null=True)
     category = models.ManyToManyField(Category, related_name='bouquets')
 
+    def __str__(self):
+        return f'Bouquet {self.name}'
+
+    class Meta:
+        verbose_name = 'букет'
+        verbose_name_plural = 'букеты'
+
 
 class Client(models.Model):
     name = models.CharField(max_length=255)
     phone = PhoneNumberField()
     email = models.EmailField(max_length=255, blank=True, null=True)
+
+    def __str__(self):
+        return f'Client - {self.name}'
+
+    class Meta:
+        verbose_name = 'клиент'
+        verbose_name_plural = 'клиенты'
 
 
 class Order(models.Model):
@@ -53,7 +67,21 @@ class Order(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     delivery_time = models.CharField(choices=delivery_times, max_length=19)
 
+    def __str__(self):
+        return f'Order - {self.bouquet.name}(bouquet) {self.client.name}(client)'
+
+    class Meta:
+        verbose_name = 'заказ'
+        verbose_name_plural = 'заказы'
+
 
 class Consultation(models.Model):
     name = models.CharField(max_length=255)
     phone = PhoneNumberField()
+
+    def __str__(self):
+        return f'Consultation {self.name}'
+
+    class Meta:
+        verbose_name = 'консультация'
+        verbose_name_plural = 'консультации'

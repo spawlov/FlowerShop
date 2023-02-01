@@ -4,5 +4,5 @@ from order_bouquet.views import index
 
 
 urlpatterns = [
-    path('', index, name='mainpage'),
+    path('', index, name='home'),
 ]
