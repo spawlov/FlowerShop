@@ -6,10 +6,18 @@ from phonenumber_field.modelfields import PhoneNumberField
 class Category(models.Model):
     title = models.CharField(max_length=255)
 
+    class Meta:
+        verbose_name = 'категория'
+        verbose_name_plural = 'категории'
+
+    def __str__(self):
+        return f'{self.title} category'
+
 
 class Bouquet(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
+    structure = models.CharField(max_length=255)
     price = models.DecimalField(
         max_digits=7,
         decimal_places=2
@@ -17,13 +25,16 @@ class Bouquet(models.Model):
     in_stock = models.BooleanField(default=False)
     number_of_sold = models.IntegerField(blank=True, null=True)
     category = models.ManyToManyField(Category, related_name='bouquets')
+    image = models.ImageField(upload_to='images/catalog')
+    width = models.IntegerField(blank=True, null=True)
+    height = models.IntegerField(blank=True, null=True)
 
     class Meta:
         verbose_name = 'букет'
         verbose_name_plural = 'букеты'
 
     def __str__(self):
-        return f'Bouquet {self.name}'
+        return f'{self.name} bouquet'
 
 
 class Client(models.Model):
@@ -36,7 +47,7 @@ class Client(models.Model):
         verbose_name_plural = 'клиенты'
 
     def __str__(self):
-        return f'Client - {self.name}'
+        return f'{self.name} client'
 
 
 class Order(models.Model):
@@ -84,4 +95,4 @@ class Consultation(models.Model):
         verbose_name_plural = 'консультации'
 
     def __str__(self):
-        return f'Consultation {self.name}'
+        return f'{self.name} consultation'
