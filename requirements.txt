@@ -1,2 +1,5 @@
 Django==3.2.16
 environs==9.5.0
+django-phonenumber-field
+django-phonenumbers
+
