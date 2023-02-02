@@ -31,7 +31,7 @@ INSTALLED_APPS = [
 
     'phonenumber_field',
 
-    'order_bouquet'
+    'order_bouquet.apps.OrderBouquetConfig',
 ]
 
 MIDDLEWARE = [
