@@ -33,7 +33,7 @@
 					<img src="{{ card.image.url }}" alt="result Img" class="result__block_img">
 					<div class="result__items">
 						<div class="title result__items_title">{{ card.name }}</div>
-						<div class="result__items_price">{{ card.price }} руб</div>
+						<div class="result__items_price">{{ card.price }} ₽</div>
                         <a href="{% url 'order' %}?bouquet={{ card.pk }}"><button class="btn result__items_btn">Заказать букет</button></a>
 						<hr class="result__items_line">
 						<div class="result__items_intro">Хотите что-то более специальное?</div>
