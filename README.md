@@ -60,5 +60,5 @@ python manage.py runserver
 В проекте принимали участие
 
 * [Kirill Rudenko](https://github.com/rudenko-ks)
-* ...
+* [Sergey Pavlov](https://github.com/spawlov)
 * ...
