@@ -18,10 +18,7 @@ class Bouquet(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
     structure = models.CharField(max_length=255)
-    price = models.DecimalField(
-        max_digits=7,
-        decimal_places=2
-    )
+    price = models.IntegerField()
     in_stock = models.BooleanField(default=False)
     number_of_sold = models.IntegerField(blank=True, null=True)
     category = models.ManyToManyField(Category, related_name='bouquets')
