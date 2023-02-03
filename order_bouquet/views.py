@@ -1,9 +1,11 @@
 from decimal import Decimal
 
 from django.db.models import Q
+from django.urls import reverse_lazy
 from django.views import generic
 
-from order_bouquet.models import Bouquet, Category, Consultation, Order
+from .forms import OrderForm
+from .models import Bouquet, Category, Consultation, Order
 
 
 class HomeView(generic.ListView):
@@ -85,3 +87,27 @@ class CardView(generic.DetailView):
     model = Bouquet
     template_name = 'card.html'
     context_object_name = 'card'
+
+
+class AdminOrdersList(generic.ListView):
+    model = Order
+    ordering = ['-pk']
+    template_name = 'admin_order.html'
+    context_object_name = 'admin_orders'
+    paginate_by = 10
+
+
+class AdminOrderAdd(generic.CreateView):
+    form_class = OrderForm
+    model = Order
+    template_name = 'order_edit.html'
+    context_object_name = 'order_data'
+    success_url = reverse_lazy('orders-list')
+
+
+class AdminOrderEdit(generic.UpdateView):
+    form_class = OrderForm
+    model = Order
+    template_name = 'order_edit.html'
+    context_object_name = 'order_data'
+    success_url = reverse_lazy('orders-list')
