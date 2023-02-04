@@ -1,0 +1,29 @@
+{% extends 'default.html' %}
+{% load static %}
+{% block content %}
+{% include 'header.html' %}
+<section id="singUpConsultation">
+	<div class="container">
+		<div class="singUpConsultation">
+			<div class="quiz">
+				<div class="quiz__back ">
+					<a href="/" class="quiz__back_link fic"><img src="{% static 'img/arrow-left.svg' %}"
+							alt="arrow-left" class="arrowLeft">
+						<span class="quiz__back_intro">Назад</span></a>
+				</div>
+				<div class="quiz__block">
+					<h1 class="title">
+						{% if created %}
+						Заявка принята. Ожидайте звонка от оператора :)
+						{% else %}
+						Не удалось создать заявку :(
+						{% endif %}
+					</h1>
+				</div>
+			</div>
+		</div>
+	</div>
+	<img src="{% static 'img/singUpConsultationImg.jpg' %}" alt="singUpConsultationImg" class="singUpConsultation__img">
+</section>
+{% include 'footer.html' %}
+{% endblock content %}
