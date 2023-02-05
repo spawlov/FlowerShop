@@ -1,5 +1,6 @@
 from decimal import Decimal
 
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views import generic
 
@@ -88,7 +89,7 @@ class CardView(generic.DetailView):
     context_object_name = 'card'
 
 
-class AdminOrdersList(generic.ListView):
+class AdminOrdersList(LoginRequiredMixin, generic.ListView):
     model = Order
     ordering = ['-pk']
     template_name = 'admin_order.html'
@@ -96,7 +97,7 @@ class AdminOrdersList(generic.ListView):
     paginate_by = 10
 
 
-class AdminOrderAdd(generic.CreateView):
+class AdminOrderAdd(LoginRequiredMixin, generic.CreateView):
     form_class = OrderForm
     model = Order
     template_name = 'order_edit.html'
@@ -104,7 +105,7 @@ class AdminOrderAdd(generic.CreateView):
     success_url = reverse_lazy('orders-list')
 
 
-class AdminOrderEdit(generic.UpdateView):
+class AdminOrderEdit(LoginRequiredMixin, generic.UpdateView):
     form_class = OrderForm
     model = Order
     template_name = 'order_edit.html'
@@ -112,7 +113,7 @@ class AdminOrderEdit(generic.UpdateView):
     success_url = reverse_lazy('orders-list')
 
 
-class AdminConsultationList(generic.ListView):
+class AdminConsultationList(LoginRequiredMixin, generic.ListView):
     model = Consultation
     ordering = ['-pk']
     template_name = 'admin_consultation.html'
@@ -120,7 +121,7 @@ class AdminConsultationList(generic.ListView):
     paginate_by = 10
 
 
-class AdminConsultationEdit(generic.UpdateView):
+class AdminConsultationEdit(LoginRequiredMixin, generic.UpdateView):
     form_class = ConsultationForm
     model = Consultation
     template_name = 'consultation_edit.html'

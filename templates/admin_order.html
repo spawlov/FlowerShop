@@ -1,10 +1,13 @@
-{% extends 'default.html' %}
+{% extends 'default_for_admin.html' %}
 {% load static %}
 {% block content %}
     {% include 'header.html' %}
     <div class="container-fluid mt-5 mb-3">
         <p class="title">Заказы</p>
         <div class="table-responsive">
+            {% if not request.user.is_staff %}
+                <h5 class="h5 text-center text-danger">У вас недостаточно прав для работы с этой страницей...</h5>
+            {% else %}
             <table class="table table-success text-body">
                 <tr>
                     <th>#</th>
@@ -44,6 +47,7 @@
                     <input class="form-control btn btn-outline-success" value="Добавить заказ">
                 </a>
             </p>
+            {% endif %}
         </div>
     </div>
     {% if page_obj.has_other_pages %}
