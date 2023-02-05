@@ -2,7 +2,7 @@ from django.urls import path
 
 from .views import HomeView, CatalogView, QuizView, QuizStepView, ResultView, \
     ConsultationView, OrderView, OrderStepView, CardView, AdminOrdersList, \
-    AdminOrderEdit, AdminOrderAdd
+    AdminOrderEdit, AdminOrderAdd, AdminConsultationList, AdminConsultationEdit
 
 urlpatterns = [
     path('', HomeView.as_view(), name='home'),
@@ -18,4 +18,14 @@ urlpatterns = [
     path('admin-order/', AdminOrdersList.as_view(), name='orders-list'),
     path('order-add/', AdminOrderAdd.as_view(), name='order-add'),
     path('order-edit/<int:pk>/', AdminOrderEdit.as_view(), name='order-edit'),
+    path(
+        'admin-consultations/',
+        AdminConsultationList.as_view(),
+        name='consultations-list'
+    ),
+    path(
+        'consultation-edit/<int:pk>/',
+        AdminConsultationEdit.as_view(),
+        name='consultation-edit'
+    ),
 ]

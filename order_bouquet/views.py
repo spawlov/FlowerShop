@@ -4,7 +4,7 @@ from django.db.models import Q
 from django.urls import reverse_lazy
 from django.views import generic
 
-from .forms import OrderForm
+from .forms import OrderForm, ConsultationForm
 from .models import Bouquet, Category, Consultation, Order
 
 
@@ -111,3 +111,19 @@ class AdminOrderEdit(generic.UpdateView):
     template_name = 'order_edit.html'
     context_object_name = 'order_data'
     success_url = reverse_lazy('orders-list')
+
+
+class AdminConsultationList(generic.ListView):
+    model = Consultation
+    ordering = ['-pk']
+    template_name = 'admin_consultation.html'
+    context_object_name = 'consultations'
+    paginate_by = 10
+
+
+class AdminConsultationEdit(generic.UpdateView):
+    form_class = ConsultationForm
+    model = Consultation
+    template_name = 'consultation_edit.html'
+    context_object_name = 'consultation_data'
+    success_url = reverse_lazy('consultations-list')
