@@ -117,8 +117,18 @@ class Order(models.Model):
 
 
 class Consultation(models.Model):
-    name = models.CharField(max_length=255)
-    phone = PhoneNumberField()
+    status = (
+        ('WAITING', 'Ожидание'),
+        ('COMPLETED', 'Проведена'),
+    )
+    name = models.CharField(max_length=255, verbose_name='Имя')
+    phone = PhoneNumberField(verbose_name='Телефон')
+    status = models.CharField(
+        max_length=9,
+        choices=status,
+        default='WAITING',
+        verbose_name='Статус',
+    )
 
     class Meta:
         verbose_name = 'консультация'

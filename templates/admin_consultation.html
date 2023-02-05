@@ -21,7 +21,7 @@
                                     <td>{{ client.pk }}</td>
                                     <td>{{ client.name }}</td>
                                     <td>{{ client.phone }}</td>
-                                    <td></td>
+                                    <td>{{ client.get_status_display }}</td>
                                     <td class="text-end">
                                         <a class="text-decoration-none text-primary" href="{% url 'consultation-edit' client.pk %}">
                                             <button class="btn btn-sm btn-outline-success">Изменить</button>

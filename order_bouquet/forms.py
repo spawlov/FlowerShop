@@ -43,4 +43,7 @@ class ConsultationForm(forms.ModelForm):
             'phone': forms.TextInput(
                 attrs={'class': 'form-control'}
             ),
+            'status': forms.Select(
+                attrs={'class': 'form-select'}
+            ),
         }
