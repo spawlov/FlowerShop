@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Order
+from .models import Order, Consultation
 
 
 class OrderForm(forms.ModelForm):
@@ -28,5 +28,19 @@ class OrderForm(forms.ModelForm):
             ),
             'delivery_time': forms.Select(
                 attrs={'class': 'form-select'}
+            ),
+        }
+
+
+class ConsultationForm(forms.ModelForm):
+    class Meta:
+        model = Consultation
+        fields = '__all__'
+        widgets = {
+            'name': forms.TextInput(
+                attrs={'class': 'form-control'}
+            ),
+            'phone': forms.TextInput(
+                attrs={'class': 'form-control'}
             ),
         }
