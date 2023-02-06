@@ -9,12 +9,20 @@
 - `DEBUG`  — дебаг-режим. Поставьте `True`, чтобы увидеть отладочную информацию в случае ошибки. По умолчанию `False`.
 - `SECRET_KEY`  — секретный ключ проекта.
 - `ALLOWED_HOSTS`  — смотри  [документацию Django](https://docs.djangoproject.com/en/3.2/ref/settings/#allowed-hosts).
+- `EMAIL_MAIL`  — email, с которого будет отправлять почта
+- `EMAIL_LOGIN_MAIL`  — логин
+- `EMAIL_PASSWORD_MAIL`  — пароль
+- `EMAIL_RECIPIENTS`  — список получателей
 
 Пример содержимого `.env` файла:
 ```
 SECRET_KEY='django-insecure-pw_dRxiyw^4Wn7n#!_**$-m^@4dRxiyw^4Wn7n#!ntb'
 ALLOWED_HOSTS=localhost,127.0.0.1
 DEBUG=False
+EMAIL_MAIL=email@pyflowershop.ru
+EMAIL_LOGIN_MAIL=login
+EMAIL_PASSWORD_MAIL=password
+EMAIL_RECIPIENTS=manager_1@gmail.com,manager_2@yandex.ru
 ```
 
 Более подробная инструкция по настройке переменных окружения можно найти в соответствующем разделе на [django docs](https://docs.djangoproject.com/en/3.2/ref/settings/).
@@ -61,4 +69,4 @@ python manage.py runserver
 
 * [Kirill Rudenko](https://github.com/rudenko-ks)
 * [Sergey Pavlov](https://github.com/spawlov)
-* ...
+* [AirGuy-one](https://github.com/AirGuy-one)
