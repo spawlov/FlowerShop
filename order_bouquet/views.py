@@ -1,3 +1,5 @@
+import phonenumbers
+
 from decimal import Decimal
 from typing import Any
 from django.http import HttpRequest, HttpResponse
@@ -6,10 +8,11 @@ from django.shortcuts import render
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views import generic
-from order_bouquet.forms import ConsultationForm
+from django.contrib.auth.models import User
+from django.db.models import Count
 
 from .forms import OrderForm, ConsultationForm
-from .models import Bouquet, Category, Consultation, Order
+from .models import Bouquet, Category, Consultation, Order, Client
 
 
 class HomeView(generic.ListView):
@@ -24,6 +27,7 @@ class HomeView(generic.ListView):
         consultation.save()
         context = {'created': True}
         return render(request, 'consultation_confirm.html', context)
+
 
 class CatalogView(generic.ListView):
     queryset = Bouquet.objects.all().order_by('?')[:6]
@@ -91,16 +95,52 @@ class ConsultationView(generic.CreateView):
         return render(request, 'consultation_confirm.html', context)
 
 
-class OrderView(generic.ListView):
-    model = Order
+class OrderView(generic.TemplateView):
     template_name = 'order.html'
-    context_object_name = 'orders'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        context['bouquet'] = self.request.GET.get('bouquet')
+        return context
 
 
-class OrderStepView(generic.ListView):
-    model = Order
-    template_name = 'order-step.html'
-    context_object_name = 'orders-step'
+class OrderStepView(generic.View):
+    def post(self, request, *args, **kwargs):
+        delivery_times = {
+            'Как можно скорее': 'AS_SOON_AS_POSSIBLE',
+            'с 10:00 до 12:00': 'FROM_10_TO_12',
+            'с 12:00 до 14:00': 'FROM_12_TO_14',
+            'с 14:00 до 16:00': 'FROM_14_TO_16',
+            'с 16:00 до 18:00': 'FROM_16_TO_18',
+            'с 18:00 до 20:00': 'FROM_18_TO_20',
+        }
+
+        client, created = Client.objects.get_or_create(
+            name=self.request.POST.get('fname'),
+            phone=phonenumbers.parse(self.request.POST.get('tel')),
+        )
+
+        min_orders_count = min(list(
+            User.objects.filter(is_staff=False).annotate(
+                c=Count('courier_orders')
+            ).values_list('c', flat=True)
+        ))
+        min_count_orders_courier = User.objects.annotate(c=Count('courier_orders')).filter(
+            is_staff=False,
+            c=min_orders_count
+        ).first()
+
+        Order.objects.create(
+            bouquet=Bouquet.objects.get(pk=self.request.GET.get('bouquet')),
+            manager=User.objects.filter(is_staff=True).last(),
+            courier=min_count_orders_courier,
+            client=client,
+            address=self.request.POST.get('adres'),
+            status='NOT_PAID',
+            delivery_time=delivery_times[self.request.POST.get('orderTime')],
+        )
+
+        return render(self.request, 'order-step.html')
 
 
 class CardView(generic.DetailView):
