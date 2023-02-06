@@ -15,9 +15,9 @@
 								<p class="card__items_text card__items_text__first">
 									{{ card.description }}
 								</p>
-								<p class="card__items_text">
+								<!-- <p class="card__items_text">
 									{{ card.height }}<br>{{ card.width }}
-								</p>
+								</p> -->
 							</div>
 						</div>
 						<div class="card__elems ">
@@ -26,14 +26,13 @@
 								<p class="card__items_text card__items_text__first">
                                     {{ card.structure }}
 								</p>
-
 							</div>
 						</div>
 					</div>
 					<img src="{{ card.image.url }}" alt="result Img" class="result__block_img">
 					<div class="result__items">
 						<div class="title result__items_title">{{ card.name }}</div>
-						<div class="result__items_price">{{ card.price }} руб</div>
+						<div class="result__items_price">{{ card.price }} ₽</div>
                         <a href="{% url 'order' %}?bouquet={{ card.pk }}"><button class="btn result__items_btn">Заказать букет</button></a>
 						<hr class="result__items_line">
 						<div class="result__items_intro">Хотите что-то более специальное?</div>
