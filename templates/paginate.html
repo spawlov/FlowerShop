@@ -1,7 +1,7 @@
 {% load shop_tags %}
 <div class="container-fluid mt-2 text-center">
     <nav class="blog-pagination" aria-label="Pagination">
-        <ul class="pagination justify-content-start">
+        <ul class="pagination pagination-sm justify-content-end">
             {% if page_obj.has_previous %}
                 <li class="page-item"><a class="page-link" href="?{% url_replace page=1 %}"><<</a></li>
                 <li class="page-item"><a class="page-link" href="?{% url_replace page=page_obj.previous_page_number %}"><</a>
