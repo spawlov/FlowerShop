@@ -30,9 +30,10 @@ class HomeView(generic.ListView):
 
 
 class CatalogView(generic.ListView):
-    queryset = Bouquet.objects.all().order_by('?')
+    queryset = Bouquet.objects.all()
     template_name = 'catalog.html'
     context_object_name = 'catalog'
+    paginate_by = 9
 
 
 class QuizView(generic.ListView):
