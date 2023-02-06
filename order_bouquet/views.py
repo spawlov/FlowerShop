@@ -30,7 +30,7 @@ class HomeView(generic.ListView):
 
 
 class CatalogView(generic.ListView):
-    queryset = Bouquet.objects.all().order_by('?')[:6]
+    queryset = Bouquet.objects.all().order_by('?')
     template_name = 'catalog.html'
     context_object_name = 'catalog'
 
