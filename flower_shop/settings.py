@@ -120,3 +120,14 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Media files
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Mail.ru
+EMAIL = env('EMAIL_MAIL')
+EMAIL_HOST = 'smtp.mail.ru'
+EMAIL_PORT = 2525
+EMAIL_HOST_USER = env('EMAIL_LOGIN_MAIL')
+EMAIL_HOST_PASSWORD = env('EMAIL_PASSWORD_MAIL')
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+EMAIL_TIMEOUT = 60
+EMAIL_RECIPIENTS = env.list('EMAIL_RECIPIENTS')

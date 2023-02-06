@@ -65,15 +65,45 @@ class Order(models.Model):
         ('FROM_18_TO_20', 'с 18:00 до 20:00'),
     )
 
-    bouquet = models.ForeignKey(Bouquet, on_delete=models.PROTECT, related_name='bouquet_orders')
-    manager = models.ForeignKey(User, on_delete=models.PROTECT, related_name='manager_orders')
-    courier = models.ForeignKey(User, on_delete=models.PROTECT, related_name='courier_orders')
-    client = models.ForeignKey(Client, on_delete=models.PROTECT, related_name='client_orders')
-    address = models.CharField(max_length=255)
-    status = models.CharField(choices=order_statuses, max_length=15)
+    bouquet = models.ForeignKey(
+        Bouquet,
+        on_delete=models.PROTECT,
+        related_name='bouquet_orders',
+        verbose_name='Букет'
+    )
+    manager = models.ForeignKey(
+        User,
+        on_delete=models.PROTECT,
+        related_name='manager_orders',
+        verbose_name='Менеджер',
+    )
+    courier = models.ForeignKey(
+        User,
+        on_delete=models.PROTECT,
+        related_name='courier_orders',
+        verbose_name='Курьер',
+    )
+    client = models.ForeignKey(
+        Client,
+        on_delete=models.PROTECT,
+        related_name='client_orders',
+        verbose_name='Заказчик',
+    )
+    address = models.CharField(max_length=255,
+                               verbose_name='Адрес доставки'
+                               )
+    status = models.CharField(
+        choices=order_statuses,
+        max_length=15,
+        verbose_name='Статус',
+    )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    delivery_time = models.CharField(choices=delivery_times, max_length=19)
+    delivery_time = models.CharField(
+        choices=delivery_times,
+        max_length=19,
+        verbose_name='Время доставки',
+    )
 
     class Meta:
         verbose_name = 'заказ'
@@ -84,8 +114,18 @@ class Order(models.Model):
 
 
 class Consultation(models.Model):
-    name = models.CharField(max_length=255)
-    phone = PhoneNumberField()
+    status = (
+        ('WAITING', 'Ожидание'),
+        ('COMPLETED', 'Проведена'),
+    )
+    name = models.CharField(max_length=255, verbose_name='Имя')
+    phone = PhoneNumberField(verbose_name='Телефон')
+    status = models.CharField(
+        max_length=9,
+        choices=status,
+        default='WAITING',
+        verbose_name='Статус',
+    )
 
     class Meta:
         verbose_name = 'консультация'

@@ -1,0 +1,33 @@
+{% extends 'default_for_admin.html' %}
+{% load static %}
+{% block content %}
+    {% include 'header.html' %}
+    <div class="container-fluid mb-5 mt-3">
+        <p class="title">Авторизация</p>
+        <div class="row">
+            <div class="col-4"></div>
+            <div class="col-4 mb-3 pb-3">
+                <fieldset class="form-control">
+                    <form method="post" action="{% url 'login' %}">
+                        {{ form.non_field_errors }}
+                        {% csrf_token %}
+                        <p>
+                            <label class="form-label" for="{{ form.username.id_for_label }}">{{ form.username.name }}</label>
+                            <input id="{{ form.username.id_for_label }}" name="{{ form.username.name }}" type="text" class="form-control">
+                        </p>
+                        <p>
+                            <label class="form-label" for="{{ form.password.id_for_label }}">{{ form.password.name }}</label>
+                            <input  id="{{ form.password.id_for_label }}" name="{{ form.password.name }}" type="password" class="form-control">
+                        </p>
+                        <p>
+                            <button type="submit" class="btn btn-outline-success form-control">Вход</button>
+                        </p>
+                        <input type="hidden" name="next" value="{{ next }}">
+                    </form>
+                </fieldset>
+            </div>
+            <div class="col-4"></div>
+        </div>
+    </div>
+    {% include 'footer.html' %}
+{% endblock %}
