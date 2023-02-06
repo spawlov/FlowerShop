@@ -4,56 +4,102 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 
 class Category(models.Model):
-    title = models.CharField(max_length=255)
+    title = models.CharField(
+        max_length=255,
+        verbose_name='Название',
+    )
 
     class Meta:
-        verbose_name = 'категория'
-        verbose_name_plural = 'категории'
+        verbose_name = 'Категория'
+        verbose_name_plural = 'Категории'
 
     def __str__(self):
-        return f'{self.title} category'
+        return f'{self.title}'
 
 
 class Bouquet(models.Model):
-    name = models.CharField(max_length=255)
-    description = models.TextField()
-    structure = models.CharField(max_length=255)
-    price = models.IntegerField()
-    in_stock = models.BooleanField(default=False)
-    number_of_sold = models.IntegerField(blank=True, null=True)
-    category = models.ManyToManyField(Category, related_name='bouquets')
-    image = models.ImageField(upload_to='images/catalog')
-    width = models.IntegerField(blank=True, null=True)
-    height = models.IntegerField(blank=True, null=True)
+    name = models.CharField(
+        max_length=255,
+        verbose_name='Название',
+    )
+    description = models.TextField(
+        verbose_name='Описание',
+    )
+    structure = models.CharField(
+        max_length=255,
+        verbose_name='Состав',
+    )
+    price = models.IntegerField(
+        verbose_name='Цена',
+    )
+    in_stock = models.BooleanField(
+        default=False,
+        verbose_name='В наличии',
+    )
+    number_of_sold = models.IntegerField(
+        blank=True,
+        null=True,
+        verbose_name='Кол-во проданных',
+    )
+    category = models.ManyToManyField(
+        Category,
+        related_name='bouquets',
+        verbose_name='Категория',
+    )
+    image = models.ImageField(
+        upload_to='images/catalog',
+        verbose_name='Изображение',
+    )
+    width = models.IntegerField(
+        blank=True,
+        null=True,
+        verbose_name='Ширина',
+    )
+    height = models.IntegerField(
+        blank=True,
+        null=True,
+        verbose_name='Высота',
+    )
 
     class Meta:
-        verbose_name = 'букет'
-        verbose_name_plural = 'букеты'
+        verbose_name = 'Букет'
+        verbose_name_plural = 'Букеты'
 
     def __str__(self):
-        return f'{self.name} bouquet'
+        return f'{self.name}'
 
 
 class Client(models.Model):
-    name = models.CharField(max_length=255)
-    phone = PhoneNumberField()
-    email = models.EmailField(max_length=255, blank=True, null=True)
+    name = models.CharField(
+        max_length=255,
+        verbose_name='Имя',
+    )
+    phone = PhoneNumberField(
+        verbose_name='Телефон',
+    )
+    email = models.EmailField(
+        max_length=255,
+        blank=True,
+        null=True,
+        verbose_name='Эл. почта',
+    )
 
     class Meta:
-        verbose_name = 'клиент'
-        verbose_name_plural = 'клиенты'
+        verbose_name = 'Клиент'
+        verbose_name_plural = 'Клиенты'
 
     def __str__(self):
-        return f'{self.name} client'
+        return f'{self.name}'
 
 
 class Order(models.Model):
     order_statuses = (
+        ('NOT_PAID', 'Не оплачен'),
         ('ACCEPTED', 'Принят'),
         ('PROCESSING', 'Обрабатывается'),
         ('BEING_DELIVERED', 'Доставляется'),
         ('CANCELLED', 'Отменен'),
-        ('DELIVERED', 'Доставлен')
+        ('DELIVERED', 'Доставлен'),
     )
 
     delivery_times = (
@@ -69,7 +115,7 @@ class Order(models.Model):
         Bouquet,
         on_delete=models.PROTECT,
         related_name='bouquet_orders',
-        verbose_name='Букет'
+        verbose_name='Букет',
     )
     manager = models.ForeignKey(
         User,
@@ -89,16 +135,23 @@ class Order(models.Model):
         related_name='client_orders',
         verbose_name='Заказчик',
     )
-    address = models.CharField(max_length=255,
-                               verbose_name='Адрес доставки'
-                               )
+    address = models.CharField(
+        max_length=255,
+        verbose_name='Адрес доставки',
+    )
     status = models.CharField(
         choices=order_statuses,
         max_length=15,
         verbose_name='Статус',
     )
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name='Создан',
+    )
+    updated_at = models.DateTimeField(
+        auto_now=True,
+        verbose_name='Обновлен',
+    )
     delivery_time = models.CharField(
         choices=delivery_times,
         max_length=19,
@@ -106,11 +159,11 @@ class Order(models.Model):
     )
 
     class Meta:
-        verbose_name = 'заказ'
-        verbose_name_plural = 'заказы'
+        verbose_name = 'Заказ'
+        verbose_name_plural = 'Заказы'
 
     def __str__(self):
-        return f'Order - {self.bouquet.name}(bouquet) {self.client.name}(client)'
+        return f'Order - {self.bouquet.name} {self.client.name}'
 
 
 class Consultation(models.Model):
@@ -128,8 +181,8 @@ class Consultation(models.Model):
     )
 
     class Meta:
-        verbose_name = 'консультация'
-        verbose_name_plural = 'консультации'
+        verbose_name = 'Консультация'
+        verbose_name_plural = 'Консультации'
 
     def __str__(self):
-        return f'{self.name} consultation'
+        return f'{self.name}'
