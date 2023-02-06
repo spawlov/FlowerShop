@@ -1,0 +1,57 @@
+{% extends 'default_for_admin.html' %}
+{% load static %}
+{% block content %}
+    {% include 'header.html' %}
+    <div class="container-fluid mt-5 mb-3">
+        <p class="title">Заказы</p>
+        <div class="table-responsive">
+            {% if not request.user.is_staff %}
+                <h5 class="h5 text-center text-danger">У вас недостаточно прав для работы с этой страницей...</h5>
+            {% else %}
+            <table class="table table-success text-body">
+                <tr>
+                    <th>#</th>
+                    <th>Букет</th>
+                    <th>Менеджер</th>
+                    <th>Курьер</th>
+                    <th>Клиент</th>
+                    <th>Адрес доставки</th>
+                    <th>Статус</th>
+                    <th>Заказан</th>
+                    <th>Изменен</th>
+                    <th>Доставить</th>
+                    <th></th>
+                </tr>
+                {% for order in admin_orders %}
+                    <tr>
+                        <td>{{ order.pk }}</td>
+                        <td>{{ order.bouquet.name }}</td>
+                        <td>{{ order.manager }}</td>
+                        <td>{{ order.courier }}</td>
+                        <td>{{ order.client.name }}</td>
+                        <td>{{ order.address }}</td>
+                        <td>{{ order.get_status_display }}</td>
+                        <td>{{ order.created_at|date:"d.m.y h:m" }}</td>
+                        <td>{{ order.updated_at|date:"d.m.y h:m" }}</td>
+                        <td>{{ order.get_delivery_time_display }}</td>
+                        <td>
+                            <a class="text-decoration-none text-primary" href="{% url 'order-edit' order.pk %}">
+                                <button class="btn btn-sm btn-outline-success">Изменить</button>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <p class="mb-3">
+                <a href="{% url 'order-add' %}">
+                    <input class="form-control btn btn-outline-success" value="Добавить заказ">
+                </a>
+            </p>
+            {% endif %}
+        </div>
+    </div>
+    {% if page_obj.has_other_pages %}
+        {% include 'paginate.html' %}
+    {% endif %}
+    {% include 'footer.html' %}
+{% endblock content %}
