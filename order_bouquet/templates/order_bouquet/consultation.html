@@ -1,7 +1,7 @@
 {% extends 'default.html' %}
 {% load static %}
 {% block content %}
-	{% include 'header.html' %}
+	{% include 'order_bouquet/includes/_header.html' %}
 	<section id="singUpConsultation">
 		<div class="container">
 			<div class="singUpConsultation">
@@ -21,5 +21,5 @@
 		</div>
 		<img src="{% static 'img/singUpConsultationImg.jpg' %}" alt="singUpConsultationImg" class="singUpConsultation__img">
 	</section>
-	{% include 'footer.html' %}
+	{% include 'order_bouquet/includes/_footer.html' %}
 {% endblock content %}

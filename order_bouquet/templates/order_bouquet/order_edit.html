@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block content %}
-    {% include 'header.html' %}
+    {% include 'order_bouquet/includes/_header.html' %}
     <div class="container-fluid mt-5 mb-3">
         {% if not request.user.is_staff %}
             <h5 class="h5 text-center text-danger">У вас недостаточно прав для работы с этой страницей...</h5>
@@ -25,5 +25,5 @@
         </div>
         {% endif %}
     </div>
-    {% include 'footer.html' %}
+    {% include 'order_bouquet/includes/_footer.html' %}
 {% endblock content %}

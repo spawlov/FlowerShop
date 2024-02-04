@@ -141,3 +141,6 @@ dmypy.json
 cython_debug/
 
 **/.idea/
+/.pre-commit-config.yaml
+/order_bouquet/static/
+/static/

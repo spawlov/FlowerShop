@@ -4,7 +4,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.template.loader import render_to_string
 
-from .models import Order, Consultation
+from .models import Consultation, Order
 
 
 def sending_mail(sender, recipients, subject, message_html):
@@ -21,7 +21,7 @@ def sending_mail(sender, recipients, subject, message_html):
                 to=[recipient],
                 connection=connection,
             )
-            message.attach_alternative(message_html, 'text/html')
+            message.attach_alternative(message_html, "text/html")
             message.send()
     return
 
@@ -29,42 +29,39 @@ def sending_mail(sender, recipients, subject, message_html):
 @receiver(post_save, sender=Order)
 def add_order(sender, instance, created, *args, **kwargs):
     if created:
-        url = f'{settings.ALLOWED_HOSTS[0]}oder-edit/{instance.pk}/'
+        url = f"{settings.ALLOWED_HOSTS[0]}oder-edit/{instance.pk}/"
         html_content = render_to_string(
-            'email/added_order.html',
+            "order_bouquet/email/added_order.html",
             {
-                'url': url,
-            }
+                "url": url,
+            },
         )
-        subject = f'Новый заказ №{instance.pk}'
+        subject = f"Новый заказ №{instance.pk}"
 
         sending_mail(
             settings.EMAIL,
             settings.EMAIL_RECIPIENTS,
             subject,
-            html_content
+            html_content,
         )
 
     return
 
 
 @receiver(post_save, sender=Consultation)
-def add_order(sender, instance, created, *args, **kwargs):
+def add_order(sender, instance, created, *args, **kwargs):  # noqa
     if created:
-        url = f'{settings.ALLOWED_HOSTS[0]}consultation-edit/{instance.pk}/'
+        url = f"{settings.ALLOWED_HOSTS[0]}consultation-edit/{instance.pk}/"
         html_content = render_to_string(
-            'email/added_consultation.html',
-            {
-                'url': url
-            }
+            "order_bouquet/email/added_consultation.html", {"url": url}
         )
-        subject = 'Новый запрос консультации'
+        subject = "Новый запрос консультации"
 
         sending_mail(
             settings.EMAIL,
             settings.EMAIL_RECIPIENTS,
             subject,
-            html_content
+            html_content,
         )
 
     return
